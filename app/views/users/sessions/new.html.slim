@@ -1,0 +1,26 @@
+br/
+br/
+.large-4.large-centered.columns
+  .large-12.large-centered.columns
+    h3 Log in
+  .large-12.large-centered
+  = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| 
+    .login-box
+      = devise_error_messages!
+      .row
+        .large-12.columns
+          form
+            .row
+              .large-12.columns
+                = f.email_field :email, autofocus: true 
+            .row
+              .large-12.columns
+                = f.password_field :password, autocomplete: "off" 
+            .row
+              .large-12.large-centered.columns
+                = f.check_box :remember_me 
+                = f.label :remember_me
+            .row
+              .large-12.large-centered.columns
+                = f.submit "Log in", class: "input button expand"
+  = render "users/shared/links"

@@ -1,0 +1,73 @@
+br/
+br/
+
+.row
+  .large-3.columns
+    .panel
+      a href="#" 
+        img src="https://media.licdn.com/mpr/mpr/shrinknp_400_400/p/6/005/06c/366/2cc373a.jpg" /
+      h5
+        a href="#" Lintang Arief 
+      .section-container.vertical-nav data-options=("deep_linking: false; one_up: true") data-section=""
+    .panel
+      = form_for(@stat, url: create_status_timelines_path()) do |f| 
+        .row
+          .large-12.columns
+            form
+              .row
+                .large-12.columns
+                  = f.label "What is Your Mind?"
+                  = f.text_area :description
+              .row
+                .column.left
+                = f.submit "Post", class: "input button tiny expand"
+    .panel
+      h6 Friends &rsquo; Activities
+      - @activities.each do |activity|
+        = activity.inspect
+  .large-6.columns
+    - @status.each do |stat|
+      .row
+        .large-2.columns.small-3
+          img src="https://media.licdn.com/mpr/mpr/shrink_100_100/p/6/005/06c/366/2cc373a.jpg" /
+        .large-10.columns
+          p
+            strong Lintang Arief : 
+            | #{stat.description}
+          ul.inline-list
+            li
+              - if current_user.likes?(stat)
+                = link_to "Unlike", toggle_likes_timelines_path(type: "stat", id: stat.id), method: :post
+              - else
+                = link_to "Like", toggle_likes_timelines_path(type: "stat", id: stat.id), method: :post                
+          ul.inline-list
+            = form_for(@comment, url: create_comment_timelines_path(), method: :post) do |f| 
+              = f.label "What is Your Mind for This Status?"
+              = f.text_area :body
+              = f.hidden_field :stat_id, value: stat.id
+              = f.submit "Post", class: "input button tiny "
+                        
+          h6 #{stat.comment_threads.count} Comments
+          - stat.comment_threads.each do |comment|
+            .row
+              .large-2.columns.small-3
+                img src="https://media.licdn.com/mpr/mpr/shrink_100_100/p/6/005/06c/366/2cc373a.jpg" /
+              .large-10.columns
+                p #{comment.body}
+                - if current_user.likes?(comment)
+                  = link_to "Unlike", toggle_likes_timelines_path(type: "comment", id: comment.id), method: :post
+                - else
+                  = link_to "Like", toggle_likes_timelines_path(type: "comment", id: comment.id), method: :post
+                  
+          
+      hr/
+
+  aside.large-3.columns.hide-for-small
+    p
+      img src="http://www.brandfreak.com/images/Misc/beautiful-life-full.jpg" /
+    p
+      img src="https://anadaday.files.wordpress.com/2010/02/rcoawear9print.jpg" /
+    p
+      img src="http://media.onsugar.com/files/2011/02/08/3/192/1922398/8ad498f75302429a_material.jpg" /
+    p
+      img src="http://files1.coloribus.com/files/adsarchive/part_1015/10153555/file/converse-all-star-shoes-converse-pink-girl-small-80270.jpg" /
